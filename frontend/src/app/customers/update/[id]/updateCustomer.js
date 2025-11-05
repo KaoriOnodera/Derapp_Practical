@@ -11,15 +11,34 @@ export default async function updateCustomer(formData) {
     gender: updated_gender,
   });
 
-  const res = await fetch(process.env.NEXT_PUBLIC_API_ENDPOINT + `/customers`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    body: body_msg,
-  });
-  if (!res.ok) {
-    throw new Error("Failed to update customer");
+  const apiEndpoint =
+    process.env.NEXT_PUBLIC_API_ENDPOINT || "http://127.0.0.1:8000";
+
+  console.log("API Endpoint:", apiEndpoint); // デバッグ
+  console.log("Request body:", body_msg); // デバッグ
+
+  try {
+    const res = await fetch(apiEndpoint + `/customers`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: body_msg,
+    });
+
+    console.log("Response received:", res.status); // デバッグ
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error(
+        `Failed to update customer: ${res.status} - ${errorText}`
+      );
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.error("Fetch error details:", error); // デバッグ
+    throw error;
   }
 }

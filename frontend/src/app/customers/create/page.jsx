@@ -2,7 +2,7 @@
 import { useRef } from "react";
 import { useRouter } from "next/navigation";
 
-import createCustomer from "./createCustomer";
+import createCustomer from "./createCustomer"; //.js形式のAPI関数をインポート
 
 export default function CreatePage() {
   const formRef = useRef();
@@ -11,6 +11,17 @@ export default function CreatePage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(formRef.current);
+
+    // 1. formDataの中から"customer_id"を取り出し、変数に格納
+    const customerId = formData.get("customer_id");
+
+    // 2. もし、そのIDが空であったならば…
+    if (!customerId) {
+      // アラートを表示
+      alert("IDは必須です");
+      // 処理を中断
+      return;
+    }
     await createCustomer(formData);
     router.push(`./create/confirm?customer_id=${formData.get("customer_id")}`);
   };

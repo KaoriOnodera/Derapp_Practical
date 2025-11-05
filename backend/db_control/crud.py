@@ -86,8 +86,8 @@ def myupdate(mymodel, values):
     session = Session()
 
     customer_id = values.pop("customer_id")
-
-    query = "お見事！E0002の原因はこのクエリの実装ミスです。正しく実装しましょう"
+    # 変なクエリが入っていたので、修正：
+    query = update(mymodel).where(mymodel.customer_id == customer_id).values(values)
     try:
         # トランザクションを開始
         with session.begin():

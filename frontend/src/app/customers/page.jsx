@@ -9,8 +9,13 @@ export default function Page() {
 
   useEffect(() => {
     const fetchAndSetCustomer = async () => {
-      const customerData = await fetchCustomers();
-      setCustomerInfos(customerData);
+      try {
+        console.log("Fetching customers...");
+        const customerData = await fetchCustomers();
+        setCustomerInfos(customerData);
+      } catch (error) {
+        console.error("Failed to fetch customers:", error);
+      }
     };
     fetchAndSetCustomer();
   }, []);
