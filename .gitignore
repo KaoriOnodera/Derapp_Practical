@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+*.pyc
+
+# Environment variables
+.env
+*.env
+backend/.env
+
+# Database
+*.db
+*.sqlite3
+CRM.db
+
+# Certificates - セキュリティのため除外
+*.crt.pem
+*.pem
+*.key
+
+# Node.js
+node_modules/
+.next/
+out/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# Backup files
+*.backup
+
+# Logs
+*.log
