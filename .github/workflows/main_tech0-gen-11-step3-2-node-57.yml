@@ -9,6 +9,7 @@ on:
       - main
     paths:
       - "frontend/**"
+      - ".github/workflows/main_tech0-gen-11-step3-2-node-57.yml" # ← 追加
   workflow_dispatch:
 
 jobs:
