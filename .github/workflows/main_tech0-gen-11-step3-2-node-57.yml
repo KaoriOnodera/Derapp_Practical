@@ -53,6 +53,25 @@ jobs:
         with:
           name: node-app
 
+      - name: Check and fix directory structure
+        run: |
+          echo "=== Downloaded structure ==="
+          ls -lah
+
+          if [ -d ".next" ]; then
+            echo "✅ .next at root level"
+          elif [ -d "frontend" ]; then
+            echo "⚠️  Files nested in frontend/, moving to root..."
+            shopt -s dotglob
+            mv frontend/* ./
+            rmdir frontend
+            echo "✅ Files moved to root"
+            ls -lah
+          else
+            echo "❌ Unexpected structure"
+            find . -type d
+          fi
+
       - name: "Deploy to Azure Web App"
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
