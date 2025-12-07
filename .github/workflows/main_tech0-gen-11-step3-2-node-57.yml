@@ -38,7 +38,14 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: frontend
+          path: |
+            frontend/.next
+            frontend/public
+            frontend/package.json
+            frontend/package-lock.json
+            frontend/next.config.mjs
+            frontend/server.js
+            frontend/node_modules
 
   deploy:
     runs-on: ubuntu-latest
