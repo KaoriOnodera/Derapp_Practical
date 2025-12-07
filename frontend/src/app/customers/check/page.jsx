@@ -1,3 +1,4 @@
+"use client";
 import OneCustomerInfoCard from "@/app/components/one_customer_info_card.jsx";
 
 async function fetchCustomer(id) {
@@ -10,8 +11,8 @@ async function fetchCustomer(id) {
   return res.json();
 }
 
-export default async function ReadPage({ query }) {
-  const { id } = query;
+export default async function ReadPage({ searchParams }) {
+  const { customer_id: id } = await searchParams;
   const customerInfo = await fetchCustomer(id);
 
   return (
