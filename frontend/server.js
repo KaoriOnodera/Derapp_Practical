@@ -1,12 +1,23 @@
 const { createServer } = require("http");
 const { parse } = require("url");
 const next = require("next");
+const path = require("path");
 
 const dev = process.env.NODE_ENV !== "production";
 const hostname = "0.0.0.0";
 const port = process.env.PORT || 3000;
 
-const app = next({ dev });
+// .next ディレクトリの場所を明示的に指定
+const app = next({
+  dev,
+  hostname,
+  port,
+  dir: __dirname, // ← 追加
+  conf: {
+    distDir: ".next", // ← 追加
+  },
+});
+
 const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
@@ -19,12 +30,8 @@ app.prepare().then(() => {
       res.statusCode = 500;
       res.end("internal server error");
     }
-  })
-    .once("error", (err) => {
-      console.error(err);
-      process.exit(1);
-    })
-    .listen(port, () => {
-      console.log(`> Ready on http://${hostname}:${port}`);
-    });
+  }).listen(port, (err) => {
+    if (err) throw err;
+    console.log(`> Ready on http://${hostname}:${port}`);
+  });
 });
